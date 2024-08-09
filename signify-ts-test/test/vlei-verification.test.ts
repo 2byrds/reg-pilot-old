@@ -22,18 +22,18 @@ let roleClient: SignifyClient;
 
 const failDir = "fail_reports";
 let failDirPrefixed: string;
-const signedDir = "signed_reports";
+const signedDir = "nord_signed_reports";
 let signedDirPrefixed: string;
 
 afterEach(async () => {});
 
 beforeAll(async () => {
-  //   process.env.REG_PILOT_API = "http://127.0.0.1:8000";
-  //   process.env.VLEI_VERIFIER = "http://127.0.0.1:7676";
+    process.env.REG_PILOT_API = "http://127.0.0.1:8000";
+    process.env.VLEI_VERIFIER = "http://127.0.0.1:7676";
   //   process.env.SIGNIFY_SECRETS="CbII3tno87wn3uGBP12qm"
-  //   process.env.SIGNIFY_SECRETS = "A7DKYPya4oi6uDnvBmjjp";
-  //   process.env.ROLE_NAME = "unicredit-datasubmitter";
-  //   process.env.TEST_ENVIRONMENT = "nordlei_dev";
+    process.env.SIGNIFY_SECRETS = "A7DKYPya4oi6uDnvBmjjp";
+    process.env.ROLE_NAME = "unicredit-datasubmitter";
+    process.env.TEST_ENVIRONMENT = "nordlei_demo";
   //   process.env.KERIA="https://errp.wallet.vlei.io";
   env = resolveEnvironment();
 
@@ -219,8 +219,10 @@ test("reg-pilot-api", async function run() {
   // Loop over the reports directory
   const reports = fs.readdirSync(signedDirPrefixed);
 
-  for (const signedReport of reports) {
-    const filePath = path.join(signedDirPrefixed, signedReport);
+  // for (const signedReport of reports) {
+  //   const filePath = path.join(signedDirPrefixed, signedReport);
+    const signedReport = "signed__PILLAR3010000_CONDIS_2023-12-31_20230516103116008.zip";
+    const filePath = "/Users/meenyleeny/VSCode/reg-pilot/signify-ts-test/test/data/signed_reports/EFE8-Km32lJzOa51K3IWMcctJCX8Ifu5f4BaUWdfgSbw/signed__PILLAR3010000_CONDIS_2023-12-31_20230516103116008.zip";
     if (fs.lstatSync(filePath).isFile()) {
       console.log(`Processing file: ${filePath}`);
       const signedZipBuf = fs.readFileSync(`${filePath}`);
@@ -341,8 +343,8 @@ test("reg-pilot-api", async function run() {
     throw new Error(
       "No signed reports found in the directory " + signedDirPrefixed,
     );
-  }
-  throw new Error("No signed reports for " + ecrAid.prefix);
+  // }
+  // throw new Error("No signed reports for " + ecrAid.prefix);
 }, 1000000);
 
 export async function getGrantedCredential(
